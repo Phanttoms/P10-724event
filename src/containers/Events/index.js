@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import EventCard from "../../components/EventCard";
 import Select from "../../components/Select";
 import { useData } from "../../contexts/DataContext";
@@ -22,7 +22,7 @@ const EventList = () => {
 			}
 			return false;
 		})
-		.filter((event, index) => {
+		.filter((_, index) => {
 			if (
 				(currentPage - 1) * PER_PAGE <= index &&
 				PER_PAGE * currentPage > index
@@ -32,14 +32,11 @@ const EventList = () => {
 			return false;
 		});
 
-	useEffect(() => {
-		setCurrentPage(1);
-	}, [type]);
-
 	const changeType = (evtType) => {
+		setCurrentPage(1);
 		setType(evtType);
 	};
-	const totalPages = Math.ceil((filteredEvents.length || 1) / PER_PAGE);
+	const totalPages = Math.ceil((filteredEvents.length || 0) / PER_PAGE);
 	const typeList = [...new Set(data?.events.map((event) => event.type))];
 
 	return (

@@ -10,10 +10,16 @@ import Logo from "../../components/Logo";
 import Icon from "../../components/Icon";
 import Form from "../../containers/Form";
 import Modal from "../../containers/Modal";
+import ModalEvent from "../../containers/ModalEvent";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-	const { last } = useData();
+	// const { last } = useData();
+
+	const { data, error } = useData();
+	(data?.events || []).sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
+	const lastEvent = data?.events[0];
+
 	return (
 		<>
 			<header>
@@ -114,13 +120,23 @@ const Page = () => {
 			<footer className="row">
 				<div className="col presta">
 					<h3>Notre derniére prestation</h3>
-					<EventCard
-						imageSrc={last?.cover}
-						title={last?.title}
-						date={new Date(last?.date)}
-						small
-						label="boom"
-					/>
+					{error && <div>An error occured</div>}
+					{data === null ? (
+						"loading"
+					) : (
+						<Modal Content={<ModalEvent event={lastEvent} />}>
+							{({ setIsOpened }) => (
+								<EventCard
+									onClick={() => setIsOpened(true)}
+									imageSrc={lastEvent?.cover}
+									title={lastEvent?.title}
+									date={new Date(lastEvent?.date)}
+									small
+									label={lastEvent?.type}
+								/>
+							)}
+						</Modal>
+					)}
 				</div>
 				<div className="col contact">
 					<h3>Contactez-nous</h3>
