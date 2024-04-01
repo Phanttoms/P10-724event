@@ -36,8 +36,8 @@ const EventList = () => {
 		setCurrentPage(1);
 		setType(evtType);
 	};
-	const totalPages = Math.ceil((filteredEvents.length || 0) / PER_PAGE);
-	const typeList = [...new Set(data?.events.map((event) => event.type))];
+	const totalPages = Math.floor((filteredEvents.length || 0) / PER_PAGE) + 1;
+	const typeList = new Set(data?.events.map((event) => event.type));
 
 	return (
 		<>
@@ -47,7 +47,10 @@ const EventList = () => {
 			) : (
 				<>
 					<h3 className="SelectTitle">Catégories</h3>
-					<Select selection={typeList} onChange={changeType} />
+					<Select
+						selection={Array.from(typeList)}
+						onChange={(value) => (value ? changeType(value) : changeType(null))}
+					/>
 					<div id="events" className="ListContainer">
 						{filteredEvents.map((event) => (
 							<Modal key={event.id} Content={<ModalEvent event={event} />}>
@@ -64,7 +67,7 @@ const EventList = () => {
 						))}
 					</div>
 					<div className="Pagination">
-						{[...Array(totalPages)].map((_, n) => (
+						{[...Array(totalPages || 0)].map((_, n) => (
 							// eslint-disable-next-line react/no-array-index-key
 							<a key={n} href="#events" onClick={() => setCurrentPage(n + 1)}>
 								{n + 1}
