@@ -33,6 +33,11 @@ const Slider = () => {
 		.slice()
 		.sort((evtA, evtB) => new Date(evtA.date) - new Date(evtB.date));
 
+	const handleRadioChange = (radioIdx) => {
+		setIndex(radioIdx);
+		setSelectedRadioIdx(radioIdx);
+	};
+
 	return (
 		<div className="SlideCardList">
 			{byDateAsc?.map((event, idx) => (
@@ -73,6 +78,7 @@ const Slider = () => {
 							type="radio"
 							name="radio-button"
 							checked={selectedRadioIdx === radioIdx}
+							onChange={() => handleRadioChange(radioIdx)}
 						/>
 					))}
 				</div>
