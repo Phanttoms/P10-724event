@@ -4,24 +4,29 @@ import Field, { FIELD_TYPES } from "../../components/Field";
 import Select from "../../components/Select";
 import Button, { BUTTON_TYPES } from "../../components/Button";
 
+// Fonction de simulation d'API de contact (mock)
 const mockContactApi = () =>
 	new Promise((resolve) => {
-		setTimeout(resolve, 1000);
+		setTimeout(resolve, 1000); // Simulation d'un délai de 1 seconde
 	});
 
+// Composant de formulaire
 const Form = ({ onSuccess, onError }) => {
+	// États pour le suivi de l'état d'envoi du formulaire et les erreurs de validation
 	const [sending, setSending] = useState(false);
 	const [errors, setErrors] = useState({});
 
+	// Fonction de validation d'une adresse e-mail
 	const validateEmail = (email) => {
 		// Expression régulière pour vérifier si une adresse e-mail est valide
 		const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		return regex.test(email);
 	};
 
+	// Fonction de soumission du formulaire (callback memoized avec useCallback)
 	const sendContact = useCallback(
 		async (evt) => {
-			evt.preventDefault();
+			evt.preventDefault(); // Empêcher le comportement par défaut du formulaire
 
 			const form = evt.target;
 			const fields = form.querySelectorAll(
@@ -32,6 +37,7 @@ const Form = ({ onSuccess, onError }) => {
 			let isFormValid = true;
 			const newErrors = {};
 
+			// Validation des champs requis et gestion des erreurs
 			fields.forEach((field) => {
 				if (!field.value.trim()) {
 					isFormValid = false;
@@ -39,6 +45,7 @@ const Form = ({ onSuccess, onError }) => {
 				}
 			});
 
+			// Validation du champ de sélection et gestion des erreurs
 			if (!selectValue.trim()) {
 				selectField.classList.add("field-empty");
 				isFormValid = false;
@@ -47,27 +54,31 @@ const Form = ({ onSuccess, onError }) => {
 				selectField.classList.remove("field-empty");
 			}
 
+			// Validation de l'adresse e-mail et gestion des erreurs
 			const emailField = form.querySelector("input[name='Email']");
 			if (!validateEmail(emailField.value)) {
 				isFormValid = false;
 				newErrors.Email = "Veuillez saisir une adresse e-mail valide";
 			}
 
+			// Mise à jour des erreurs
 			setErrors(newErrors);
 
+			// Arrêter la soumission du formulaire si des erreurs sont présentes
 			if (!isFormValid) {
 				return;
 			}
 
+			// Déclencher l'état d'envoi du formulaire
 			setSending(true);
 
 			try {
-				await mockContactApi();
-				setSending(false);
-				onSuccess();
+				await mockContactApi(); // Appel à l'API de contact (simulée)
+				setSending(false); // Mettre à jour l'état d'envoi du formulaire
+				onSuccess(); // Exécuter la fonction onSuccess (callback réussite)
 			} catch (err) {
-				setSending(false);
-				onError(err);
+				setSending(false); // Mettre à jour l'état d'envoi du formulaire en cas d'erreur
+				onError(err); // Exécuter la fonction onError (callback erreur)
 			}
 		},
 		[onSuccess, onError]

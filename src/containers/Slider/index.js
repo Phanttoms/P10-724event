@@ -4,35 +4,31 @@ import { getMonth } from "../../helpers/Date";
 
 import "./style.scss";
 
+// Composant Slider
 const Slider = () => {
-	const { data } = useData();
+	const { data } = useData(); // Utilisation du hook useData pour récupérer les données
+	// États pour suivre l'index de l'élément actif et l'index de l'élément radio sélectionné
 	const [index, setIndex] = useState(0);
 	const [selectedRadioIdx, setSelectedRadioIdx] = useState(0);
-	// const byDateDesc = data?.focus.sort((evtA, evtB) =>
-	// 	new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
-	// );
-	// const nextCard = () => {
-	// 	setTimeout(() => setIndex(index < byDateDesc.length ? index + 1 : 0), 5000);
-	// };
-	// useEffect(() => {
-	// 	nextCard();
-	// });
 
+	// Effet useEffect pour gérer le défilement automatique
 	useEffect(() => {
+		// Interval pour changer l'index de l'élément actif et de l'élément radio sélectionné
 		const interval = setInterval(() => {
 			setIndex((prevIndex) => (prevIndex + 1) % (data?.focus.length || 1));
 			setSelectedRadioIdx(
 				(prevIndex) => (prevIndex + 1) % (data?.focus.length || 1)
 			);
-		}, 5000);
-		return () => clearInterval(interval);
-	}, [data]);
+		}, 5000); // Changement toutes les 5 secondes
+		return () => clearInterval(interval); // Nettoyage de l'intervalle lors du démontage du composant
+	}, [data]); // Déclenché lorsque les données changent
 
-	// Tri des événements du plus ancien au plus récent
+	// Tri des événements par date ascendant
 	const byDateAsc = data?.focus
 		.slice()
 		.sort((evtA, evtB) => new Date(evtA.date) - new Date(evtB.date));
 
+	// Fonction pour gérer le changement de l'élément radio sélectionné
 	const handleRadioChange = (radioIdx) => {
 		setIndex(radioIdx);
 		setSelectedRadioIdx(radioIdx);
@@ -56,18 +52,6 @@ const Slider = () => {
 							</div>
 						</div>
 					</div>
-					{/* <div className="SlideCard__paginationContainer">
-						<div className="SlideCard__pagination">
-							{byDateAsc?.map((_, radioIdx) => (
-								<input
-									key={`${event.title + radioIdx}`}
-									type="radio"
-									name="radio-button"
-									checked={selectedRadioIdx === radioIdx}
-								/>
-							))}
-						</div>
-					</div> */}
 				</Fragment>
 			))}
 			<div className="SlideCard__paginationContainer">

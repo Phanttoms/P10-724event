@@ -14,8 +14,6 @@ import ModalEvent from "../../containers/ModalEvent";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-	// const { last } = useData();
-
 	const { data, error } = useData();
 	(data?.events || []).sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 	const lastEvent = data?.events[0];
