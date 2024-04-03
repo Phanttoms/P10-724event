@@ -21,7 +21,7 @@ const Slider = () => {
 			);
 		}, 5000); // Changement toutes les 5 secondes
 		return () => clearInterval(interval); // Nettoyage de l'intervalle lors du démontage du composant
-	}, [data]); // Déclenché lorsque les données changent
+	}, [data]);
 
 	// Tri des événements par date ascendant
 	const byDateAsc = data?.focus
