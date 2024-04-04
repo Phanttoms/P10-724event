@@ -73,12 +73,12 @@ const Form = ({ onSuccess, onError }) => {
 			setSending(true);
 
 			try {
-				await mockContactApi(); // Appel à l'API de contact (simulée)
-				setSending(false); // Mettre à jour l'état d'envoi du formulaire
+				await mockContactApi();
+				setSending(false);
 				onSuccess(); // Exécuter la fonction onSuccess (callback réussite)
 			} catch (err) {
-				setSending(false); // Mettre à jour l'état d'envoi du formulaire en cas d'erreur
-				onError(err); // Exécuter la fonction onError (callback erreur)
+				setSending(false);
+				onError(err);
 			}
 		},
 		[onSuccess, onError]
