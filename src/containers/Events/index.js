@@ -15,24 +15,26 @@ const EventList = () => {
 	const [currentPage, setCurrentPage] = useState(1); // État pour stocker le numéro de la page actuelle
 
 	// Filtrage des événements en fonction du type sélectionné et de la pagination
-	const filteredEvents = ((!type ? data?.events : data?.events) || [])
-		.filter((event) => {
+	const filteredEvents = ((!type ? data?.events : data?.events) || []).filter(
+		(event) => {
 			// Filtrer les événements en fonction du type sélectionné
 			if (!type || event.type === type) {
+				// setAllFilteredEvents(allFilteredEvents + 1);
 				return true;
 			}
 			return false;
-		})
-		.filter((_, index) => {
-			// Pagination : Filtrer les événements à afficher en fonction de la page actuelle
-			if (
-				(currentPage - 1) * PER_PAGE <= index &&
-				PER_PAGE * currentPage > index
-			) {
-				return true;
-			}
-			return false;
-		});
+		}
+	);
+	const test = filteredEvents.filter((_, index) => {
+		// Pagination : Filtrer les événements à afficher en fonction de la page actuelle
+		if (
+			(currentPage - 1) * PER_PAGE <= index &&
+			PER_PAGE * currentPage > index
+		) {
+			return true;
+		}
+		return false;
+	});
 
 	// Fonction pour changer le type (catégorie) sélectionné
 	const changeType = (evtType) => {
@@ -41,7 +43,10 @@ const EventList = () => {
 	};
 
 	// Calcul du nombre total de pages en fonction du nombre total d'événements filtrés
-	const totalPages = Math.floor((filteredEvents.length || 0) / PER_PAGE) + 1;
+	const totalPages =
+		filteredEvents.length > 9
+			? Math.ceil((test.length || 0) / PER_PAGE) + 1
+			: Math.floor((test.length || 0) / PER_PAGE) + 1;
 
 	// Création d'un ensemble de types uniques à partir des données d'événement pour les options de sélection
 	const typeList = new Set(data?.events.map((event) => event.type));
@@ -59,7 +64,7 @@ const EventList = () => {
 						onChange={(value) => (value ? changeType(value) : changeType(null))}
 					/>
 					<div id="events" className="ListContainer">
-						{filteredEvents.map((event) => (
+						{test.map((event) => (
 							<Modal key={event.id} Content={<ModalEvent event={event} />}>
 								{({ setIsOpened }) => (
 									<EventCard
