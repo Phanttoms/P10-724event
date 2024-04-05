@@ -33,7 +33,7 @@ const Select = ({
 						>
 							{value ||
 								(!titleEmpty && "Toutes") ||
-								(titleDefault && "Personnel")}
+								(titleDefault && "Personel")}
 						</li>
 						{!collapsed && (
 							<>

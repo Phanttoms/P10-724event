@@ -16,7 +16,7 @@ const Form = ({ onSuccess, onError }) => {
 	const [sending, setSending] = useState(false);
 	const [nom, setNom] = useState("");
 	const [prenom, setPrenom] = useState("");
-	const [selectValue, setSelectValue] = useState("Personnel");
+	const [selectValue, setSelectValue] = useState("Personel");
 	const [email, setEmail] = useState("");
 	const [message, setMessage] = useState("");
 	const [nomError, setNomError] = useState("");
@@ -120,10 +120,10 @@ const Form = ({ onSuccess, onError }) => {
 						error={prenomError}
 					/>
 					<Select
-						selection={["Personnel", "Entreprise"]}
+						selection={["Personel", "Entreprise"]}
 						value={selectValue}
 						onChange={(value) => setSelectValue(value)}
-						label="Personnel / Entreprise"
+						label="Personel / Entreprise"
 						type="large"
 						titleEmpty
 						titleDefault
