@@ -16,12 +16,11 @@ const Form = ({ onSuccess, onError }) => {
 	const [sending, setSending] = useState(false);
 	const [nom, setNom] = useState("");
 	const [prenom, setPrenom] = useState("");
-	const [selectValue, setSelectValue] = useState("");
+	const [selectValue, setSelectValue] = useState("Personnel");
 	const [email, setEmail] = useState("");
 	const [message, setMessage] = useState("");
 	const [nomError, setNomError] = useState("");
 	const [prenomError, setPrenomError] = useState("");
-	const [selectError, setSelectError] = useState("");
 	const [emailError, setEmailError] = useState("");
 	const [messageError, setMessageError] = useState("");
 
@@ -36,12 +35,10 @@ const Form = ({ onSuccess, onError }) => {
 	const resetFields = () => {
 		setNom("");
 		setPrenom("");
-		setSelectValue("");
 		setEmail("");
 		setMessage("");
 		setNomError("");
 		setPrenomError("");
-		setSelectError("");
 		setEmailError("");
 		setMessageError("");
 	};
@@ -65,13 +62,6 @@ const Form = ({ onSuccess, onError }) => {
 				isFormValid = false;
 			} else {
 				setPrenomError("");
-			}
-
-			if (!selectValue.trim()) {
-				setSelectError("Veuillez sélectionner une option");
-				isFormValid = false;
-			} else {
-				setSelectError("");
 			}
 
 			if (!email.trim() || !validateEmail(email)) {
@@ -130,13 +120,13 @@ const Form = ({ onSuccess, onError }) => {
 						error={prenomError}
 					/>
 					<Select
-						selection={["Personel", "Entreprise"]}
+						selection={["Personnel", "Entreprise"]}
 						value={selectValue}
 						onChange={(value) => setSelectValue(value)}
-						label="Personel / Entreprise"
+						label="Personnel / Entreprise"
 						type="large"
 						titleEmpty
-						error={selectError}
+						titleDefault
 					/>
 					<Field
 						placeholder=""

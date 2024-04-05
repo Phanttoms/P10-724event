@@ -13,13 +13,14 @@ const Select = ({
 	label,
 	type = "normal",
 	error, // Ajoutez la prop error pour afficher le message d'erreur
+	titleDefault,
 }) => {
-	const [value, setValue] = useState();
+	const [value, setValue] = useState("");
 	const [collapsed, setCollapsed] = useState(true);
 	const changeValue = (newValue) => {
 		onChange(newValue);
 		setValue(newValue);
-		setCollapsed(newValue);
+		setCollapsed(true);
 	};
 	return (
 		<>
@@ -30,7 +31,9 @@ const Select = ({
 						<li
 							className={collapsed ? "SelectTitle--show" : "SelectTitle--hide"}
 						>
-							{value || (!titleEmpty && "Toutes")}
+							{value ||
+								(!titleEmpty && "Toutes") ||
+								(titleDefault && "Personnel")}
 						</li>
 						{!collapsed && (
 							<>
@@ -99,6 +102,7 @@ Select.propTypes = {
 	label: PropTypes.string,
 	type: PropTypes.string,
 	error: PropTypes.string, // Prop pour afficher le message d'erreur
+	titleDefault: PropTypes.bool,
 };
 
 Select.defaultProps = {
@@ -108,6 +112,7 @@ Select.defaultProps = {
 	type: "normal",
 	name: "select",
 	error: "",
+	titleDefault: false,
 };
 
 export default Select;
