@@ -12,6 +12,7 @@ const Select = ({
 	titleEmpty,
 	label,
 	type = "normal",
+	error, // Ajoutez la prop error pour afficher le message d'erreur
 }) => {
 	const [value, setValue] = useState();
 	const [collapsed, setCollapsed] = useState(true);
@@ -21,48 +22,57 @@ const Select = ({
 		setCollapsed(newValue);
 	};
 	return (
-		<div className={`SelectContainer ${type}`} data-testid="select-testid">
-			{label && <div className="label">{label}</div>}
-			<div className="Select">
-				<ul>
-					<li className={collapsed ? "SelectTitle--show" : "SelectTitle--hide"}>
-						{value || (!titleEmpty && "Toutes")}
-					</li>
-					{!collapsed && (
-						<>
-							{!titleEmpty && (
-								<li onClick={() => changeValue(null)}>
-									<input defaultChecked={!value} name="selected" type="radio" />{" "}
-									Toutes
-								</li>
-							)}
-							{selection.map((s) => (
-								<li key={s} onClick={() => changeValue(s)}>
-									<input
-										defaultChecked={value === s}
-										name="selected"
-										type="radio"
-									/>{" "}
-									{s}
-								</li>
-							))}
-						</>
-					)}
-				</ul>
-				<input type="hidden" value={value || ""} name={name} />
-				<button
-					type="button"
-					data-testid="collapse-button-testid"
-					className={collapsed ? "open" : "close"}
-					onClick={(e) => {
-						e.preventDefault();
-						setCollapsed(!collapsed);
-					}}
-				>
-					<Arrow />
-				</button>
+		<>
+			<div className={`SelectContainer ${type}`} data-testid="select-testid">
+				{label && <div className="label">{label}</div>}
+				<div className="Select">
+					<ul>
+						<li
+							className={collapsed ? "SelectTitle--show" : "SelectTitle--hide"}
+						>
+							{value || (!titleEmpty && "Toutes")}
+						</li>
+						{!collapsed && (
+							<>
+								{!titleEmpty && (
+									<li onClick={() => changeValue(null)}>
+										<input
+											defaultChecked={!value}
+											name="selected"
+											type="radio"
+										/>{" "}
+										Toutes
+									</li>
+								)}
+								{selection.map((s) => (
+									<li key={s} onClick={() => changeValue(s)}>
+										<input
+											defaultChecked={value === s}
+											name="selected"
+											type="radio"
+										/>{" "}
+										{s}
+									</li>
+								))}
+							</>
+						)}
+					</ul>
+					<input type="hidden" value={value || ""} name={name} />
+					<button
+						type="button"
+						data-testid="collapse-button-testid"
+						className={collapsed ? "open" : "close"}
+						onClick={(e) => {
+							e.preventDefault();
+							setCollapsed(!collapsed);
+						}}
+					>
+						<Arrow />
+					</button>
+				</div>
 			</div>
-		</div>
+			{error && <span className="error">{error}</span>}
+		</>
 	);
 };
 
@@ -88,6 +98,7 @@ Select.propTypes = {
 	titleEmpty: PropTypes.bool,
 	label: PropTypes.string,
 	type: PropTypes.string,
+	error: PropTypes.string, // Prop pour afficher le message d'erreur
 };
 
 Select.defaultProps = {
@@ -96,6 +107,7 @@ Select.defaultProps = {
 	label: "",
 	type: "normal",
 	name: "select",
+	error: "",
 };
 
 export default Select;

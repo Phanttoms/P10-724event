@@ -32,11 +32,24 @@ const Form = ({ onSuccess, onError }) => {
 		return regex.test(emailCheck);
 	};
 
+	// Fonction de réinitialisation des champs après la soumission réussie
+	const resetFields = () => {
+		setNom("");
+		setPrenom("");
+		setSelectValue("");
+		setEmail("");
+		setMessage("");
+		setNomError("");
+		setPrenomError("");
+		setSelectError("");
+		setEmailError("");
+		setMessageError("");
+	};
+
 	// Fonction de soumission du formulaire (callback memoized avec useCallback)
 	const sendContact = useCallback(
 		async (evt) => {
 			evt.preventDefault(); // Empêcher le comportement par défaut du formulaire
-
 			let isFormValid = true;
 
 			// Validation des champs requis et gestion des erreurs
@@ -87,6 +100,7 @@ const Form = ({ onSuccess, onError }) => {
 				await mockContactApi();
 				setSending(false);
 				onSuccess(); // Exécuter la fonction onSuccess (callback réussite)
+				resetFields(); // Réinitialiser les champs après la soumission réussie
 			} catch (err) {
 				setSending(false);
 				onError(err);
