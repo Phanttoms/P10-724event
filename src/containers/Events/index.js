@@ -25,7 +25,7 @@ const EventList = () => {
 			return false;
 		}
 	);
-	const test = filteredEvents.filter((_, index) => {
+	const pageFilteredEvents = filteredEvents.filter((_, index) => {
 		// Pagination : Filtrer les événements à afficher en fonction de la page actuelle
 		if (
 			(currentPage - 1) * PER_PAGE <= index &&
@@ -35,7 +35,6 @@ const EventList = () => {
 		}
 		return false;
 	});
-
 	// Fonction pour changer le type (catégorie) sélectionné
 	const changeType = (evtType) => {
 		setCurrentPage(1);
@@ -45,8 +44,8 @@ const EventList = () => {
 	// Calcul du nombre total de pages en fonction du nombre total d'événements filtrés
 	const totalPages =
 		filteredEvents.length > 9
-			? Math.ceil((test.length || 0) / PER_PAGE) + 1
-			: Math.floor((test.length || 0) / PER_PAGE) + 1;
+			? Math.ceil((pageFilteredEvents.length || 0) / PER_PAGE) + 1
+			: Math.floor((pageFilteredEvents.length || 0) / PER_PAGE) + 1;
 
 	// Création d'un ensemble de types uniques à partir des données d'événement pour les options de sélection
 	const typeList = new Set(data?.events.map((event) => event.type));
@@ -64,7 +63,7 @@ const EventList = () => {
 						onChange={(value) => (value ? changeType(value) : changeType(null))}
 					/>
 					<div id="events" className="ListContainer">
-						{test.map((event) => (
+						{pageFilteredEvents.map((event) => (
 							<Modal key={event.id} Content={<ModalEvent event={event} />}>
 								{({ setIsOpened }) => (
 									<EventCard
