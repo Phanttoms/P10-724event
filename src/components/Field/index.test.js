@@ -1,8 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import Field, { FIELD_TYPES } from "./index";
 
-// ajouter test input vide
-
 describe("When a field is created", () => {
 	it("a name is set on the field", () => {
 		render(<Field name="field-name" />);
@@ -64,5 +62,47 @@ describe("When a field is created", () => {
 			const fieldElement = screen.getByTestId("field-testid");
 			expect(fieldElement.type).toEqual("text");
 		});
+	});
+});
+
+// Ajout de test
+
+describe("When the field value is changed", () => {
+	it("calls the onChange callback with the new value", () => {
+		const onChange = jest.fn();
+		render(<Field onChange={onChange} name="test" />);
+		const fieldElement = screen.getByTestId("field-testid");
+		fireEvent.change(fieldElement, { target: { value: "new value" } });
+		expect(onChange).toHaveBeenCalledWith(
+			expect.objectContaining({
+				target: expect.objectContaining({
+					value: "new value",
+				}),
+			})
+		);
+	});
+});
+
+describe("When the field value is provided", () => {
+	it("renders the value correctly in the input field", () => {
+		render(<Field value="test value" name="test" />);
+		const fieldElement = screen.getByTestId("field-testid");
+		expect(fieldElement.value).toBe("test value");
+	});
+});
+
+describe("When the field has an error message", () => {
+	it("displays the error message", () => {
+		render(<Field error="This is an error" name="test" />);
+		const errorElement = screen.getByText("This is an error");
+		expect(errorElement).toBeInTheDocument();
+	});
+});
+
+describe("When the field does not have an error message", () => {
+	it("does not display any error message", () => {
+		render(<Field name="test" />);
+		const errorElement = screen.queryByText("This is an error");
+		expect(errorElement).not.toBeInTheDocument();
 	});
 });
