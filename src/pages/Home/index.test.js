@@ -28,17 +28,30 @@ describe("When Form is created", () => {
 	});
 });
 
+// test d'integration ajouté
+
 describe("When a page is created", () => {
-	it("a list of events is displayed", () => {
-		// to implement
+	beforeEach(() => {
+		render(<Home />);
 	});
-	it("a list a people is displayed", () => {
-		// to implement
+
+	it("a list of events is displayed", async () => {
+		await screen.findByTestId("nos-realisations");
+		await screen.findByText("Toutes");
 	});
-	it("a footer is displayed", () => {
-		// to implement
+
+	it("a list of people is displayed", async () => {
+		await screen.findByTestId("notre-equipe");
+		await screen.findByText("Samira");
 	});
-	it("an event card, with the last event, is displayed", () => {
-		// to implement
+
+	it("a footer is displayed", async () => {
+		await screen.findByText("Contactez-nous");
+		await screen.findByText("45 avenue de la République, 75000 Paris");
+	});
+
+	it("an event card, with the last event, is displayed", async () => {
+		await screen.findByTestId("notre-derniere-presta");
+		screen.queryByText("AOUT");
 	});
 });
