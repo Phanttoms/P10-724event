@@ -36,12 +36,12 @@ describe("When a page is created", () => {
 	});
 
 	it("a list of events is displayed", async () => {
-		await screen.findByTestId("nos-realisations");
+		await screen.findByTestId("nos-realisations-testid");
 		await screen.findByText("Toutes");
 	});
 
 	it("a list of people is displayed", async () => {
-		await screen.findByTestId("notre-equipe");
+		await screen.findByTestId("notre-equipe-testid");
 		await screen.findByText("Samira");
 	});
 
@@ -51,7 +51,47 @@ describe("When a page is created", () => {
 	});
 
 	it("an event card, with the last event, is displayed", async () => {
-		await screen.findByTestId("notre-derniere-presta");
+		await screen.findByTestId("notre-derniere-presta-testid");
 		screen.queryByText("AOUT");
+	});
+});
+
+// Test V2
+
+describe("Page Component", () => {
+	it("renders all components without crashing", () => {
+		const { getByTestId, getByText } = render(<Home />);
+
+		// Check if Menu component is rendered
+		expect(getByTestId("menu-testid")).toBeInTheDocument();
+
+		// Check if Slider component is rendered
+		expect(getByTestId("slider-testid")).toBeInTheDocument();
+
+		// Check if ServiceCards are rendered
+		expect(getByText("Soirée d’entreprise")).toBeInTheDocument();
+		expect(getByText("Conférences")).toBeInTheDocument();
+		expect(getByText("Experience digitale")).toBeInTheDocument();
+
+		// Check if EventList component is rendered
+		expect(getByTestId("nos-realisations-testid")).toBeInTheDocument();
+
+		// Check if PeopleCards are rendered
+		expect(getByText("Samira")).toBeInTheDocument();
+		expect(getByText("Jean-baptiste")).toBeInTheDocument();
+		expect(getByText("Alice")).toBeInTheDocument();
+		expect(getByText("Luís")).toBeInTheDocument();
+		expect(getByText("Christine")).toBeInTheDocument();
+		expect(getByText("Isabelle")).toBeInTheDocument();
+
+		// Check if Form component is rendered
+		expect(getByTestId("form-testid")).toBeInTheDocument();
+
+		// Check if Footer components are rendered
+		expect(getByTestId("notre-derniere-presta-testid")).toBeInTheDocument();
+		expect(getByText("Contactez-nous")).toBeInTheDocument();
+		expect(
+			getByText("45 avenue de la République, 75000 Paris")
+		).toBeInTheDocument();
 	});
 });

@@ -35,7 +35,7 @@ const Slider = () => {
 	};
 
 	return (
-		<div className="SlideCardList">
+		<div className="SlideCardList" data-testid="slider-testid">
 			{byDateAsc?.map((event, idx) => (
 				<Fragment key={event.title}>
 					<div
