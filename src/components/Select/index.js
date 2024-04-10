@@ -69,6 +69,7 @@ const Select = ({
 							e.preventDefault();
 							setCollapsed(!collapsed);
 						}}
+						aria-label="Fleche d'ouverture selection"
 					>
 						<Arrow />
 					</button>

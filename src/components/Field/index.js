@@ -26,6 +26,7 @@ const Field = ({
 					value={value}
 					onChange={onChange}
 					data-testid="field-testid"
+					id={name}
 				/>
 			);
 			break;
@@ -36,6 +37,7 @@ const Field = ({
 					value={value}
 					onChange={onChange}
 					data-testid="field-testid"
+					id={name}
 				/>
 			);
 			break;
@@ -48,12 +50,13 @@ const Field = ({
 					value={value}
 					onChange={onChange}
 					data-testid="field-testid"
+					id={name}
 				/>
 			);
 	}
 	return (
 		<div className="inputField">
-			<span>{label}</span>
+			<label htmlFor={name}>{label}</label>
 			{component}
 			{error && <span className="error">{error}</span>}
 		</div>

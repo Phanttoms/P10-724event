@@ -63,6 +63,7 @@ const Slider = () => {
 							name="radio-button"
 							checked={selectedRadioIdx === radioIdx}
 							onChange={() => handleRadioChange(radioIdx)}
+							aria-label={`Index ${radioIdx + 1}`}
 						/>
 					))}
 				</div>
