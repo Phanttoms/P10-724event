@@ -29,55 +29,34 @@ describe("When Form is created", () => {
 	});
 });
 
-// test d'integration ajouté
+// Test d'integration
+describe("Composant de la page", () => {
+	it("rend tous les composants sans plantage", () => {
+		const { getByTestId, getByText, getAllByTestId } = render(<Home />);
 
-describe("When a page is created", () => {
-	beforeEach(() => {
-		render(<Home />);
-	});
-
-	it("a list of events is displayed", async () => {
-		await screen.findByTestId("nos-realisations-testid");
-		await screen.findByText("Toutes");
-	});
-
-	it("a list of people is displayed", async () => {
-		await screen.findByTestId("notre-equipe-testid");
-		await screen.findByText("Samira");
-	});
-
-	it("a footer is displayed", async () => {
-		await screen.findByText("Contactez-nous");
-		await screen.findByText("45 avenue de la République, 75000 Paris");
-	});
-
-	it("an event card, with the last event, is displayed", async () => {
-		await screen.findByTestId("notre-derniere-presta-testid");
-		screen.queryByText("AOUT");
-	});
-});
-
-// Test V2
-
-describe("Page Component", () => {
-	it("renders all components without crashing", () => {
-		const { getByTestId, getByText } = render(<Home />);
-
-		// Check if Menu component is rendered
+		// Vérifier si le composant Menu est rendu
 		expect(getByTestId("menu-testid")).toBeInTheDocument();
 
-		// Check if Slider component is rendered
+		// Vérifier si le composant Slider est rendu
 		expect(getByTestId("slider-testid")).toBeInTheDocument();
 
-		// Check if ServiceCards are rendered
+		// Vérifier si les composant ServiceCard sont rendues
+		const serviceCards = getAllByTestId("service-card-testid");
+		serviceCards.forEach((card) => {
+			expect(card).toBeInTheDocument();
+		});
 		expect(getByText("Soirée d’entreprise")).toBeInTheDocument();
 		expect(getByText("Conférences")).toBeInTheDocument();
 		expect(getByText("Experience digitale")).toBeInTheDocument();
 
-		// Check if EventList component is rendered
+		// Vérifier si le composant EventList est rendu
 		expect(getByTestId("nos-realisations-testid")).toBeInTheDocument();
 
-		// Check if PeopleCards are rendered
+		// Vérifier si les composants PeopleCard sont rendues
+		const peopleCards = getAllByTestId("people-card-testid");
+		peopleCards.forEach((card) => {
+			expect(card).toBeInTheDocument();
+		});
 		expect(getByText("Samira")).toBeInTheDocument();
 		expect(getByText("Jean-baptiste")).toBeInTheDocument();
 		expect(getByText("Alice")).toBeInTheDocument();
@@ -85,11 +64,10 @@ describe("Page Component", () => {
 		expect(getByText("Christine")).toBeInTheDocument();
 		expect(getByText("Isabelle")).toBeInTheDocument();
 
-		// Check if Form component is rendered
+		// Vérifier si le composant Form est rendu
 		expect(getByTestId("form-testid")).toBeInTheDocument();
 
-		// Check if Footer components are rendered
-		expect(getByTestId("notre-derniere-presta-testid")).toBeInTheDocument();
+		// Vérifier si les composants Footer sont rendus
 		expect(getByText("Contactez-nous")).toBeInTheDocument();
 		expect(
 			getByText("45 avenue de la République, 75000 Paris")

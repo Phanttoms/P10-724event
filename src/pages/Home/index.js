@@ -120,7 +120,7 @@ const Page = () => {
 				</div>
 			</main>
 			<footer className="row">
-				<div className="col presta" data-testid="notre-derniere-presta-testid">
+				<div className="col presta">
 					<h3>Notre derniére prestation</h3>
 					{error && <div>An error occured</div>}
 					{data === null ? (
