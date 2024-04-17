@@ -19,7 +19,7 @@ const EventList = () => {
 		(event) => {
 			// Filtrer les événements en fonction du type sélectionné
 			if (!type || event.type === type) {
-				// setAllFilteredEvents(allFilteredEvents + 1);
+				// setAllFilteredEvents(allFilteredEvents);
 				return true;
 			}
 			return false;
